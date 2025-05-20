@@ -390,7 +390,16 @@ def chatbot(request):
             # 🔹 Summary
             if "summary" in low_msg or "what is this website" in low_msg:
                 full_text = " ".join(page.content for page in pages if page.content)
-                prompt = f"Please summarize the following website content:\n\n{full_text[:30000]}"
+                 prompt = f"""
+                Summarize the following website content in **a clear, structured format**:
+                - Provide a brief **overview** of the main topic.
+                - Highlight key **sections** and their purpose.
+                - Extract the most **important points** that users should know.
+                - Format it in a concise, **paragraph-based** response.
+
+                Website Content:
+                {full_text[:30000]}
+                """
                 try:
                     chat = model.start_chat(history=[])
                     gemini_reply = chat.send_message(prompt)
@@ -467,9 +476,20 @@ def chatbot(request):
                     else:
                         break
 
-                prompt = f"""Answer the following question based only on the content below from the website pages:
-                User Question: {user_msg}
-                Relevant Website Content: {combined_content}"""
+                
+                prompt = f"""
+                **Answer the following question with a detailed and well-structured response.**  
+
+                - **Be precise** and directly address the question.  
+                - Extract relevant information **ONLY** from the website content.  
+                - If multiple sources exist, summarize the key points **in a logical order**.  
+                - Avoid unnecessary details or opinions—focus on accuracy and clarity.
+
+                **User Question:** {user_msg}
+
+                **Relevant Website Content:**  
+                {combined_content}
+                """
                 try:
                     chat = model.start_chat(history=[])
                     gemini_reply = chat.send_message(prompt)
