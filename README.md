@@ -1,6 +1,6 @@
 ## Setup and Installation
 
-#Step 1: Clone the Repository
+### Step 1: Clone the Repository
 ### Download the Django project from GitHub
 ```bash
 git clone https://github.com/Akan12434/djangoprojects.git  
