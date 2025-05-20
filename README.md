@@ -50,10 +50,10 @@ python manage.py runserver
 rabbitmq-service start
 ```
 
-# Ensure RabbitMQ is running properly before proceeding.
+### Ensure RabbitMQ is running properly before proceeding.
 
 ### Step 7: Start Celery Worker
-# Start Celery to process background tasks asynchronously
+### Start Celery to process background tasks asynchronously
 ```bash
 celery -A djangoprojects worker --loglevel=info --pool=solo
 ```
