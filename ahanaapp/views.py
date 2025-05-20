@@ -334,6 +334,27 @@ def chatbot(request):
             if re.search(rf"\b{keyword}\b", user_msg, re.IGNORECASE):
                 save_chat_to_db(get_session_id(request), user_msg, reply)
                 return JsonResponse({"response": reply})
+
+        today = datetime.now()
+        user_msg_lower = user_msg.lower()
+
+        if "today" in user_msg_lower and "date" in user_msg_lower:
+            response_text = today.strftime('%d %B %Y')
+            save_chat_to_db(get_session_id(request), user_msg, response_text)
+            return JsonResponse({"response": response_text})
+
+        if "yesterday" in user_msg_lower and "date" in user_msg_lower:
+            yesterday = today - pd.Timedelta(days=1)
+            response_text = yesterday.strftime('%d %B %Y')
+            save_chat_to_db(get_session_id(request), user_msg, response_text)
+            return JsonResponse({"response": response_text})
+
+        if "tomorrow" in user_msg_lower and "date" in user_msg_lower:
+            tomorrow = today + pd.Timedelta(days=1)
+            response_text = tomorrow.strftime('%d %B %Y')
+            save_chat_to_db(get_session_id(request), user_msg, response_text)
+            return JsonResponse({"response": response_text})
+            
             
         session_id = get_session_id(request)
         url_match = re.search(r'https?://[^\s]+', user_msg)
