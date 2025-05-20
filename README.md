@@ -2,8 +2,10 @@
 
 ### Step 1: Clone the Repository
 # Download the Django project from GitHub
+```bash
 git clone https://github.com/Akan12434/djangoprojects.git  
-cd djangoprojects  
+cd djangoprojects
+```
 
 ### Step 2: Activate Virtual Environment
 # Navigate to the user directory and activate the Python virtual environment
