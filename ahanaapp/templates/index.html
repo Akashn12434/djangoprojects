@@ -1,0 +1,139 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahana Chatbot</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+      <!-- Extra 1 -->
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <canvas id="canvasRef" style="display: none;"></canvas>
+</head>
+
+<body>
+    <h1>Welcome to Ahana Chatbot</h1>
+
+    <!-- Chatbot Toggle Button (Floating Circle) -->
+    <div id="chatbot-toggle" class="chatbot-toggle" onclick="toggleChatbot()">
+        <img src="{% static 'boticon.jpg' %}" alt="Chat" class="chatbot-icon">
+    </div>
+
+    <!-- Chatbot Window -->
+    <div class="chatbot-container" id="chatbot">
+        <div class="chatbot-header" id="chatbot-header">
+            <a href="https://ahanait.com" target="_blank">
+                <img src="{% static 'ahanalogo.png' %}" alt="Logo" class="ahana-logo">
+            </a>
+            
+            <span>Ahana Chatbot</span>
+            
+            <div class="header-left">
+                <button class="btn btn-light btn-sm" onclick="toggleDarkMode()">🌙</button>
+            </div>
+
+            <div class="header-right">
+                <button class="btn btn-light btn-sm close-btn" onclick="toggleChatbot()">✖</button>
+            </div>
+            <div id="chatbotNotification" class="chatbot-notification"></div>
+         
+
+
+
+        </div>
+        <!-- Dropdown Button for Website Links -->
+        <div class="dropdown">
+            <div class="dropdown-topbutton">
+                <button class="dropdown-btn" onclick="toggleDropdown()" id="dropdown-btn">▼</button>
+            </div>
+            <div class="button-container" id="dropdown-menu" style="display: none;">
+                <button class="btn-link" onclick="window.open('https://ahanait.com/career/', '_blank')">Jobs</button>
+                <button class="btn-link" onclick="window.open('https://ahanait.com/', '_blank')">Info</button>
+                <button class="btn-link" onclick="window.open('https://hr.hwtpl.com/Ahana/login.aspx?ReturnUrl=%2fAhana%2f', '_blank')">HRMS</button>
+                <button class="btn-link" onclick="window.open('https://myahana.ahanait.com/', '_blank')">MyAhana</button>
+                <button class="btn-link" onclick="window.open('https://hr.hwtpl.com/Ahana/hrms/pages/ListTimesheetCreationP.aspx', '_blank')">Timesheet</button>
+                <button class="btn-link" onclick="window.open('https://myahana1.ahanait.com:5002/login', '_blank')">Checklist</button>
+                <button class="btn-link" onclick="window.open('https://support.ahanait.com/ahana/WorkOrder.do?woMode=viewWO&woID=144881&PORTALID=1', '_blank')">Support</button>
+                <button class="btn-link" onclick="window.open('https://chatgpt.com/', '_blank')">ChatGPT</button>
+            </div>
+        </div>
+
+        <script>
+            function toggleDropdown() {
+                var menu = document.getElementById("dropdown-menu");
+                menu.style.display = menu.style.display === "none" ? "block" : "none";
+            }
+
+            // Stop blinking after 10 seconds
+            setTimeout(() => {
+                document.getElementById("dropdown-btn").style.animation = "none";
+            }, 10000);
+        </script>
+
+        <div id="chat-window" class="chatbot-messages"></div>
+           <!-- 🔊 Listening Glow Effect (hidden by default) -->
+           <div id="listening-glow" class="listening-glow"></div>
+
+        
+        <canvas id="canvasRef" style="display: none;"></canvas>
+    
+        <!-- Expandable Circular Button -->
+        <div class="circular-menu">
+            <div id="main-btn" class="menu-btn" onclick="toggleFeatureButtons()">⚙️</div>
+            <div id="feature-buttons" class="hidden">
+                <div class="menu-btn feature-btn" id="notepad-btn" onclick="toggleNotepad()">📝</div>
+                <!-- You can add more feature buttons here -->
+            </div>
+            
+        </div>
+
+        <!-- Notepad -->
+        <div id="notepadContainer" class="hidden">
+            <button id="cancelNote">✖</button>
+            <textarea id="notepad" placeholder="Write your notes here..."></textarea>
+            <div class="buttons">
+                <button id="saveNote">Save</button>
+                <button id="deleteNote">Clear</button>
+                <button id="downloadNote">Download</button>
+            </div>
+        </div>
+        <div id="file-info" style="display: none;">
+            <p id="selected-file-name"></p>
+            <button id="cancel-button" style="margin-top: 10px; padding: 5px 10px; background-color: rgb(202, 196, 196); color: rgb(169, 27, 27); border: none; cursor: pointer;">✖</button>
+        </div>
+        <!-- Chat Input Section -->
+        <div class="chatbot-input">
+            
+            <!-- File Upload Button -->
+            <button class="upload-btn" onclick="document.getElementById('file-upload').click()">📁</button>
+            <input type="file" id="file-upload" style="display: none;" onchange="handleFileSelect()">
+        
+            
+        
+            <!-- Chat Input (Text Field) -->
+           <textarea id="chat-input" class="form-control" placeholder="Type your message..." oninput="autoResize(this)" onkeydown="handleEnter(event)"></textarea>
+
+            
+            <!-- Voice Input & Send Button -->
+            <div class="voice-controls">
+                <button id="mic-btn" class="voice-btn btn btn-success" onclick="startSpeechRecognition()">🎙️</button>
+                <button id="restart-btn" class="btn btn-warning" style="display: none;" onclick="stopAndRestartListening()">🔁</button>
+                <!-- Stop button will be inserted here by JavaScript -->
+            </div>
+            <button class="send-btn btn btn-primary" onclick="sendMessage()">➤</button>
+            <span id="mic-status" style="display: none; margin-left: 10px;">🎧 Listening...</span>
+              
+            
+        </div>
+        
+    </div>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'script.js' %}"></script>
+
+</body>
+</html>

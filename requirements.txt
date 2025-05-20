@@ -1,0 +1,42 @@
+1.step 1:
+Microsoft Windows [Version 10.0.26100.4061]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Windows\System32>cd C:\Users\user
+
+C:\Users\user>internship\Scripts\activate
+
+(internship) C:\Users\user>cd djangoprojects
+
+(internship) C:\Users\user\djangoprojects>python manage.py makemigrations
+Migrations for 'ahanaapp':
+  ahanaapp\migrations\0009_webpage_summary_alter_webpage_content_and_more.py
+    + Add field summary to webpage
+    ~ Alter field content on webpage
+    ~ Alter field url on webpage
+
+(internship) C:\Users\user\djangoprojects>python manage.py migrate
+Operations to perform:
+  Apply all migrations: admin, ahanaapp, auth, contenttypes, sessions
+Running migrations:
+  Applying ahanaapp.0009_webpage_summary_alter_webpage_content_and_more... OK
+
+(internship) C:\Users\user\djangoprojects>python manage.py runserver
+Watching for file changes with StatReloader
+Performing system checks...
+
+System check identified no issues (0 silenced).
+May 19, 2025 - 23:37:14
+Django version 5.2.1, using settings 'djangoprojects.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CTRL-BREAK.
+
+WARNING: This is a development server. Do not use it in a production setting. Use a production WSGI or ASGI server instead.
+
+step2: setup of rabbitmq
+C:\Windows\System32>rabbitmq-service start
+The RabbitMQ service is starting.
+The RabbitMQ service was started successfully.
+
+Step3:celery setup
+(internship) C:\Users\user\djangoprojects>celery -A djangoprojects worker --loglevel=info --pool=solo
