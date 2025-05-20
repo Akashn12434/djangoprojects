@@ -1,40 +1,37 @@
-Setup and Installation
-Step 1: Clone the Repository
+# Step 1: Clone the Repository  
+# Download the Django project from GitHub  
+git clone https://github.com/Akan12434/djangoprojects.git  
+cd djangoprojects  
 
-git clone https://github.com/Akan12434/djangoprojects.git
-cd djangoprojects
-Step 2: Activate Virtual Environment
+# Step 2: Activate Virtual Environment  
+# Navigate to the user directory and activate the Python virtual environment  
+cd C:\Users\user  
+internship\Scripts\activate  
 
-cd C:\Users\user
-internip\Scripts\activate
-Step 3: Install Dependencies
+# Step 3: Install Dependencies  
+# Install required dependencies from the requirements.txt file  
+pip install -r requirements.txt  
 
-pip install -r requirements.txt
-Step 4: Apply Database Migrations
+# Step 4: Apply Database Migrations  
+# Generate migration files and apply database migrations  
+python manage.py makemigrations  
+python manage.py migrate  
 
-python manage.py makemigrations
-python manage.py migrate
-Step 5: Run Django Server
+# Step 5: Run Django Server  
+# Start the local development server  
+python manage.py runserver  
 
-python manage.py runserver
-Access the application at http://127.0.0.1:8000/
+# Access the application at  
+# http://127.0.0.1:8000/  
 
-Stop the server using CTRL + BREAK
+# Stop the server using CTRL + BREAK  
 
-Running the Application
-Step 6: Start RabbitMQ
+# Step 6: Start RabbitMQ  
+# Start the RabbitMQ service to handle background tasks  
+rabbitmq-service start  
 
-rabbitmq-service start
-The RabbitMQ service will start successfully.
+# Ensure RabbitMQ is running properly before proceeding.  
 
-Ensure RabbitMQ is running properly before proceeding.
-
-Step 7: Start Celery Worker
-
-celery -A djangoprojects worker --loglevel=info --pool=solo
-
----
-
-This project demonstrates web scraping, data storage, and sentiment analysis, all tied together through a user-friendly API. Let us know if you encounter issues, or feel free to contribute with improvements!
-
-
+# Step 7: Start Celery Worker  
+# Start Celery to process background tasks asynchronously  
+celery -A djangoprojects worker --loglevel=info --pool=solo  
