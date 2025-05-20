@@ -1,10 +1,10 @@
 ## Setup and Installation
 
 Step 1: **Clone the Repository**:  
-     ```bash 
-    git clone https://github.com/Akan12434/djangoprojects.git  
-    cd djangoprojects  
-    ```
+        ```bash 
+        git clone https://github.com/Akan12434/djangoprojects.git  
+        cd djangoprojects  
+        ```
 
 Step 2: **Activate Virtual Environment**: 
         - Navigate to the user directory and activate the Python virtual environment  
