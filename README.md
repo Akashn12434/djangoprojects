@@ -12,6 +12,7 @@ cd djangoprojects
 ```bash
 cd C:\Users\user  
 internship\Scripts\activate
+cd djangoprojects
 ``` 
 
 ### Step 3: Install Dependencies
